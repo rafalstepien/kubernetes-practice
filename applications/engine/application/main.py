@@ -7,7 +7,7 @@ import logging
 logger = logging.getLogger(__name__)
 app = FastAPI()
 
-ENGINE_VERSION = "0.4.0"
+ENGINE_VERSION = "0.2.0"
 ENGINE_APP_PORT = "8080"
 
 @app.get("/version")

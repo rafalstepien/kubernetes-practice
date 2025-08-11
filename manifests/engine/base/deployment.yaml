@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: engine:0.4.0
+        image: engine:0.2.0
         resources:
           limits:
             memory: "128Mi"
