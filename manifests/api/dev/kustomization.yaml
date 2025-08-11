@@ -1,0 +1,9 @@
+namePrefix: dev-
+
+resources:
+  - ../base
+  - ./load-balancer.yaml
+  - ./configuration.yaml
+
+patches:
+  - path: ./replica_count.yaml

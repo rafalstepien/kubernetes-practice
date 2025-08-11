@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: load-balancer
+spec:
+  selector:
+    app: api-pods
+    env: dev
+  ports:
+    - port: 8000
+      targetPort: 8000
+  type: LoadBalancer

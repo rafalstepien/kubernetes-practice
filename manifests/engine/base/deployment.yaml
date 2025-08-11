@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: engine-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: engine-pods
+  template:
+    metadata:
+      labels:
+        app: engine-pods
+    spec:
+      containers:
+      - name: myapp
+        image: engine:0.4.0
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        envFrom:
+          - configMapRef:
+              name: engine-config
