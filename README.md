@@ -22,8 +22,11 @@ Here's how they look on chart
     - `minikube load api:<version>`
     - `minikube load engine:<version>`
 3. Run dev
-    - `make run-dev`
+    - `make apply-dev`
     - `make expose-dev`
 4. Run prod
-    - `make run-prod`
+    - `make apply-prod`
     - `make expose-prod`
+5. Make requests (`port` is the tunnel port exposed by `minikube`)
+    - `curl -X GET http://127.0.0.1:<port>/info`
+    - `curl -X GET http://127.0.0.1:49672/engine_version`
