@@ -29,4 +29,4 @@ Here's how they look on chart
     - `make expose-prod`
 5. Make requests (`port` is the tunnel port exposed by `minikube`)
     - `curl -X GET http://127.0.0.1:<port>/info`
-    - `curl -X GET http://127.0.0.1:49672/engine_version`
+    - `curl -X GET http://127.0.0.1:<port>/engine_version`
