@@ -1,6 +1,0 @@
-namePrefix: prod-
-
-resources:
-  - ../base
-  - ./cluster-ip.yaml
-  - ./configuration.yaml

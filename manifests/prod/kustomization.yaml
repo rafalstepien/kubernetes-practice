@@ -1,0 +1,19 @@
+namespace: production
+namePrefix: prod-
+resources:
+  - ../base
+  - ./cluster-ip.yaml
+  - ./load-balancer.yaml
+  - ./namespace.yaml
+
+configMapGenerator:
+  - name: prod-config
+    literals:
+      - API_ENVIRONMENT=prod
+      - API_PORT="8000"
+      - ENGINE_SERVICE_PORT="50009"
+      - ENGINE_SERVICE_BASE_URL="prod-cluster-ip"
+
+patches:
+  - path: ./replica-count-api.yaml
+  - path: ./replica-count-engine.yaml

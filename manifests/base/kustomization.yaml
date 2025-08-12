@@ -1,0 +1,3 @@
+resources:
+  - ./deployment-api.yaml
+  - ./deployment-engine.yaml

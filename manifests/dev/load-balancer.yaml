@@ -5,7 +5,6 @@ metadata:
 spec:
   selector:
     app: api-pods
-    env: dev
   ports:
     - port: 8000
       targetPort: 8000

@@ -1,29 +1,18 @@
 apply-dev:
-	kubectl apply -k manifests/engine/dev
-	kubectl apply -k manifests/api/dev
+	kubectl apply -k manifests/dev
 
 expose-dev:
-	minikube service dev-load-balancer
+	minikube service dev-load-balancer -n development
 
 cleanup-dev:
-	kubectl delete -k manifests/api/dev
-	kubectl delete -k manifests/engine/dev
+	kubectl delete -k manifests/dev
 
 
 apply-prod:
-	kubectl apply -k manifests/engine/prod
-	kubectl apply -k manifests/api/prod
-
+	kubectl apply -k manifests/prod
 
 expose-prod:
-	minikube service prod-load-balancer
-
+	minikube service prod-load-balancer -n production
 
 cleanup-prod:
-	kubectl delete -k manifests/api/prod
-	kubectl delete -k manifests/engine/prod
-
-
-
-apply-all: apply-dev apply-prod
-cleanup-all: cleanup-dev cleanup-prod
+	kubectl delete -k manifests/prod

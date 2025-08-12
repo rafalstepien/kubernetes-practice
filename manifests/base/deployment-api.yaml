@@ -18,7 +18,7 @@ spec:
         app: api-pods
     spec:
       containers:
-      - name: myapp
+      - name: app-api
         image: api:0.5.0
         imagePullPolicy: Never
         resources:
@@ -27,4 +27,4 @@ spec:
             cpu: "500m"
         envFrom:
           - configMapRef:
-              name: api-config     
+              name: dev-config

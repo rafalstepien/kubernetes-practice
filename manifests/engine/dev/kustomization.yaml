@@ -1,6 +1,0 @@
-namePrefix: dev-
-
-resources:
-  - ../base
-  - ./cluster-ip.yaml
-  - ./configuration.yaml

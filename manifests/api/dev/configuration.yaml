@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: api-config
-data:
-  API_ENVIRONMENT: dev
-  API_PORT: "8000"
-  ENGINE_SERVICE_PORT: "50009"
-  ENGINE_SERVICE_BASE_URL: "dev-engine-service"

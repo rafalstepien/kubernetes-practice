@@ -1,0 +1,21 @@
+namespace: development
+namePrefix: dev-
+resources:
+  - ../base
+  - ./load-balancer.yaml
+  - ./cluster-ip.yaml
+  - ./namespace.yaml
+
+
+configMapGenerator:
+  - name: dev-config
+    literals:
+      - API_ENVIRONMENT=dev
+      - API_PORT="8000"
+      - ENGINE_SERVICE_PORT="50009"
+      - ENGINE_SERVICE_BASE_URL="dev-cluster-ip"
+
+
+patches:
+  - path: ./replica-count-api.yaml
+  - path: ./replica-count-engine.yaml
