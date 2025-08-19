@@ -1,3 +1,4 @@
 resources:
-  - ./deployment-api.yaml
-  - ./deployment-engine.yaml
+  - ./deployment-calculator-api.yaml
+  - ./deployment-calculator-backend.yaml
+  - ./deployment-info-backend.yaml

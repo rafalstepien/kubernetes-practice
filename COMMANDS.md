@@ -10,3 +10,4 @@
 ## minikube
 - `minikube service <service-name>`: create a tunnel to expose service
 - `minikube image load <image-name>`: copy image built locally to minikube
+- `minikube addons enable ingress`: enable and start ingress controller before creating rules

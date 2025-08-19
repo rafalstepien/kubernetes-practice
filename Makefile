@@ -16,3 +16,14 @@ expose-prod:
 
 cleanup-prod:
 	kubectl delete -k manifests/prod
+
+
+
+
+apply-dev:
+	kubectl apply -k manifests/dev
+	kubectl apply -f manifests/dev/ingress-load-balancer.yaml
+
+expose-dev:
+	minikube service ingress-load-balancer -n ingress-nginx
+

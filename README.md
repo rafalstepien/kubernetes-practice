@@ -30,3 +30,7 @@ Here's how they look on chart
 5. Make requests (`port` is the tunnel port exposed by `minikube`)
     - `curl -X GET http://127.0.0.1:<port>/info`
     - `curl -X GET http://127.0.0.1:<port>/engine_version`
+
+
+- remember to add info.api.com and calculator.api.com to /etc/hosts
+- remeber to install ingress controller in the cluster `minikube addons enable ingress`
