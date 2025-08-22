@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 
-@app.get("/info")
+@app.get("/")
 async def info():
     return {
         "APP_NAME": "info-microservice", 
@@ -18,6 +18,6 @@ async def info():
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=os.environ.get("INFO_BACKEND_PORT"))
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("INFO_BACKEND_PORT")))
 
 

@@ -4,6 +4,7 @@ resources:
   - ../base
   - ./cluster-ip-calculator-api.yaml
   - ./cluster-ip-info-backend.yaml
+  - ./cluster-ip-calculator-backend.yaml
   - ./namespace.yaml
   - ./ingress.yaml
   # - ./ingress-load-balancer.yaml
@@ -14,6 +15,7 @@ configMapGenerator:
     literals:
       - INFO_BACKEND_PORT=8000
       - CALCULATOR_API_PORT=8001
+      - CALCULATOR_BACKEND_PORT=8002
 
 
 patches:

@@ -9,7 +9,7 @@ spec:
       http:
         paths:
           - pathType: Prefix
-            path: "/info"
+            path: /
             backend:
               service:
                 name: info-backend-service
@@ -19,7 +19,7 @@ spec:
       http:
         paths:
           - pathType: Prefix
-            path: "/add"
+            path: /
             backend:
               service:
                 name: calculator-api-service

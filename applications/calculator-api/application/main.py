@@ -1,23 +1,30 @@
 from fastapi import FastAPI
 import uvicorn
 import logging
-import requests
+import httpx
 import os
+from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
 app = FastAPI()
 
 
-@app.get("/add/")
-async def info(
-    number_1: int,
-    number_2: int
-):
-    r = requests.get(f"http://calculator-backend-service/?number_1={number_1}?&number_2={number_2}")
+class Numbers(BaseModel):
+    numbers: list[int]
+
+
+@app.post("/add")
+async def info(numbers: Numbers):
+    async with httpx.AsyncClient() as client:
+        backend_port = os.environ.get("CALCULATOR_BACKEND_PORT")
+        r = await client.post(
+            url=f"http://dev-calculator-backend-service:{backend_port}/add",
+            json=numbers.model_dump()
+        )
     return r.json()
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=os.environ.get("CALCULATOR_API_PORT"))
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("CALCULATOR_API_PORT")))
 
 
