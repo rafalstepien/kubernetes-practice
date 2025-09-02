@@ -2,35 +2,37 @@
 This is a fun repository to practice using kubernetes with kustomize in microservice environments.
 
 ## Overview
-Repository consists of one cluster with two microservices deployed across `prod` and `dev` environments:
-- API
-    - Exposed to end-users via load balancer
-    - Provides `/info` and `/engine_version` endpoints that allow client to learn about specific version of microservices withn the cluster
-    - Uses environment variables form `ConfigMap`
-- Engine
-    - Exposed to internal services via ClusterIP
-    - Provides `/version` endpoint to learn about engine version
+Repository consists of one cluster with three microservices deployed across `prod` and `dev` environments:
+- Info Backend
+    - provides dummy information about the application
+    - parametized by `INFO_BACKEND_ENV` env variable that has different values per env
+- Calculator API
+    - proxy for calculator backend
+    - uses service to send requests to `Calculator backend`
+    - user can send the list of numbers to `/add` endpoint to get the sum of all numbers
+- Calculator backend
+    - service that does the actual calculations
+    - receives requests from `Calculator API` and responds with sum
 
 Here's how they look on chart
 ![Cluster schema](./app_schema.jpg)
 
 ## How to run this repo
-1. Build images (version is your arbitrary choice of app semver, recommended to match `API_VERSION` var from `applications/api/application/main.py` and `ENGINE_VERSION` from `applications/engine/application/main.py`):
-    - `docker build -t api:<version> applications/api`
-    - `docker build -t engine:<version> applications/engine`
-2. Load images to minikube:
-    - `minikube load api:<version>`
-    - `minikube load engine:<version>`
-3. Run dev
+0. Install ingress controller in the cluster
+    - `minikube addons enable ingress`
+1. Update your `/etc/hosts` so that you have domains pointed to localhost
+    - `127.0.0.1       localhost dev.info.api.com dev.calculator.api.com prod.info.api.com prod.calculator.api.com`
+2. Build images:
+    - `make build`
+3. Load images to minikube:
+    - `make load`
+4. Run both environments
     - `make apply-dev`
-    - `make expose-dev`
-4. Run prod
     - `make apply-prod`
-    - `make expose-prod`
-5. Make requests (`port` is the tunnel port exposed by `minikube`)
-    - `curl -X GET http://127.0.0.1:<port>/info`
-    - `curl -X GET http://127.0.0.1:<port>/engine_version`
-
-
-- remember to add info.api.com and calculator.api.com to /etc/hosts
-- remeber to install ingress controller in the cluster `minikube addons enable ingress`
+5. Run load balancer that sends traffic to ingress
+    - `make apply-lb`
+6. Expose load balancer
+    - `make expose`
+7. Send requests
+    - `curl -X GET dev.info.api.com` => should respond with `ENV=development`
+    - `curl -X GET prod.info.api.com` => should respond with `ENV=production`
