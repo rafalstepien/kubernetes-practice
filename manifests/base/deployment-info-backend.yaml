@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: engine-deployment
+  name: info-backend-deployment
 spec:
-  replicas: 2
   selector:
     matchLabels:
-      app: engine-pods
+      app: info-backend-pods
   template:
     metadata:
       labels:
-        app: engine-pods
+        app: info-backend-pods
     spec:
       containers:
-      - name: app-engine
-        image: engine:0.2.0
+      - name: info-backend
+        image: info-backend:0.1.0
         resources:
           limits:
             memory: "128Mi"
             cpu: "500m"
         envFrom: []
+      

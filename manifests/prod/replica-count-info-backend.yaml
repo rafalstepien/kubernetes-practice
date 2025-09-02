@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: info-backend-deployment
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+        - name: info-backend
+          envFrom:
+            - configMapRef:
+                name: prod-config

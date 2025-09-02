@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: info-backend-service
+spec:
+  type: ClusterIP
+  selector:
+    app: info-backend-pods
+  ports:
+    - port: 8000 # where the service will be accessed by other pods
+      targetPort: 8000 # where the app is deployed

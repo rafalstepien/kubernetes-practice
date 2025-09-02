@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calculator-backend-deployment
+spec:
+  replicas: 3
+  template:
+    spec:
+      containers:
+        - name: calculator-backend
+          envFrom:
+            - configMapRef:
+                name: dev-config
