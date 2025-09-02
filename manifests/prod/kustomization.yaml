@@ -1,19 +1,25 @@
 namespace: production
 namePrefix: prod-
+
 resources:
   - ../base
-  - ./cluster-ip.yaml
-  - ./load-balancer.yaml
   - ./namespace.yaml
+  - ./ingress-rules.yaml
+  - ./cluster-ip-calculator-api.yaml
+  - ./cluster-ip-calculator-backend.yaml
+  - ./cluster-ip-info-backend.yaml
+
 
 configMapGenerator:
   - name: prod-config
     literals:
-      - API_ENVIRONMENT=prod
-      - API_PORT="8000"
-      - ENGINE_SERVICE_PORT="50009"
-      - ENGINE_SERVICE_BASE_URL="prod-cluster-ip"
+      - INFO_BACKEND_PORT=8000
+      - INFO_BACKEND_ENV=production
+      - CALCULATOR_API_PORT=8001
+      - CALCULATOR_BACKEND_PORT=8002
+
 
 patches:
-  - path: ./replica-count-api.yaml
-  - path: ./replica-count-engine.yaml
+  - path: ./replica-count-calculator-api.yaml
+  - path: ./replica-count-calculator-backend.yaml
+  - path: ./replica-count-info-backend.yaml

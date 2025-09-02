@@ -12,7 +12,8 @@ async def info():
     return {
         "APP_NAME": "info-microservice", 
         "APP_VERSION": "x.y.z", 
-        "APP_STATUS": "operating"
+        "APP_STATUS": "operating",
+        "ENV": os.environ.get("INFO_BACKEND_ENV"),
     }
 
 
