@@ -15,7 +15,7 @@ Repository consists of one cluster with three microservices deployed across `pro
     - receives requests from `Calculator API` and responds with sum
 
 Here's how they look on chart
-![Cluster schema](./app_schema.jpg)
+![Cluster schema](./cluster_schema.jpg)
 
 ## How to run this repo
 0. Install ingress controller in the cluster
