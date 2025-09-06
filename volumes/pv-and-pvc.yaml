@@ -1,0 +1,60 @@
+# - ReadWriteOnce: the volume can be mounted as read-write by a single node. Multiple pods running on the same node can access the volume.
+# - ReadWriteMany: the volume can be mounted as read-write by many nodes
+# - ReadOnlyMany: ...
+# - persistentVolumeReclaimPolicy: what happens to persistent volme when released from its claim: Retain/Delete
+
+# Definition of PV
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-static-1
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes: ["ReadWriteOnce"]
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  hostPath:
+    path: /var/lib/minikube/pv-static-1
+---
+# Definition of PVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-static-1
+  namespace: vol-lab
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: pv-static-1
+---
+# Definition of a Deployment using PVC
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pvc-demo
+  namespace: vol-lab
+spec:
+  selector:
+    matchLabels:
+      app: pvc-pods
+  template:
+    metadata:
+      labels:
+        app: pvc-pods
+    spec:
+      containers:
+        - name: app
+          image: busybox
+          command: ["sh", "-c"]
+          args: ['echo "static pv works" >> /data/hello.txt; sleep 3600']
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-static-1

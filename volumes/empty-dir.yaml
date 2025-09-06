@@ -1,0 +1,35 @@
+# - Two containers in one pod share the same "cache" volume
+# - emptyDir can define size limits and mediums (disk/memory)
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emptydir-demo
+  namespace: vol-lab
+spec:
+  selector:
+    matchLabels:
+      app: emptydir-pods
+  template:
+    metadata:
+      labels:
+        app: emptydir-pods
+    spec:
+      containers:
+        - name: writer
+          image: busybox
+          command: ["/bin/sh", "-c"]
+          args: ["while true; do date >> /cache/ts.txt; sleep 2; done"]
+          volumeMounts:
+            - name: cache
+              mountPath: /cache
+        - name: reader
+          image: busybox
+          command: ["/bin/sh", "-c"]
+          args: ["tail -f /cache/ts.txt"]
+          volumeMounts:
+            - name: cache
+              mountPath: /cache
+      volumes:
+        - name: cache
+          emptyDir: {}

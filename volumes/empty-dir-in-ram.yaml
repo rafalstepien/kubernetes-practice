@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emptydir-in-ram-demo
+  namespace: vol-lab
+spec:
+  selector:
+    matchLabels:
+      name: emptydir-in-ram-pods
+  template:
+    metadata:
+      labels:
+        name: emptydir-in-ram-pods
+    spec:
+      containers:
+        - name: app
+          image: busybox
+          command: ["/bin/sh", "-c"]
+          args: ["dd if=/dev/zero of=/mem/data.bin bs=1M count=16; sleep 3600"]
+          volumeMounts:
+            - name: memory
+              mountPath: /mem
+      volumes:
+        - name: memory
+          emptyDir:
+            medium: Memory
+            sizeLimit: 64Mi
