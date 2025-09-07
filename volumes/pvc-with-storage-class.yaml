@@ -1,0 +1,41 @@
+# PVC using storage class to dynamically provision volumes
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-dynamic-1
+  namespace: vol-lab
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard
+---
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pvc-dynamic-deployment
+  namespace: vol-lab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pvc-dynamic-pods
+  template:
+    metadata:
+      labels:
+        app: pvc-dynamic-pods
+    spec:
+      containers:
+        - name: app
+          image: busybox
+          command: ["sh", "-c"]
+          args: ['echo "$(hostname) writes" >> /data/out.txt; sleep 3600']
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-dynamic-1
